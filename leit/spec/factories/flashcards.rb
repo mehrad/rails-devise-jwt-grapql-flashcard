@@ -3,6 +3,7 @@ FactoryBot.define do
     answer { "MyString" }
     question { "MyText" }
     image_url { "MyString" }
-    user { nil }
+    box_list { ["Math", "React"]}
+    user
   end
 end

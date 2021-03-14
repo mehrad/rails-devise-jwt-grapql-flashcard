@@ -1,5 +1,5 @@
 module Mutations
-    class SignOut < Mutations::BaseMutation
+    class SignOutMutation < Mutations::BaseMutation
       graphql_name "SignOut"
   
       field :user, Types::UserType, null: false
