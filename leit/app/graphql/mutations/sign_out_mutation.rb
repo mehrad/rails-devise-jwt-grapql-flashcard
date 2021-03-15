@@ -1,22 +1,20 @@
 module Mutations
-    class SignOutMutation < Mutations::BaseMutation
+  class SignOutMutation < Mutations::BaseMutation
       graphql_name "SignOut"
-  
+
       field :user, Types::UserType, null: false
   
-      def resolve
+    def resolve
         user = context[:current_user]
-        if user.present?
-          success = user.reset_authentication_token!
+        GraphQL::ExecutionError.new("User not signed in") unless user.present?
+        
+        success = user.reset_authentication_token!
   
-          MutationResult.call(
-            obj: { user: user },
-            success: success,
-            errors: user.errors
-          )
-        else
-          GraphQL::ExecutionError.new("User not signed in")
-        end
-      end
+        MutationResult.call(
+          obj: { user: user },
+          success: success,
+          errors: user.errors
+        )
     end
   end
+end

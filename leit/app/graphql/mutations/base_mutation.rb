@@ -1,8 +1,25 @@
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
     argument_class Types::BaseArgument
-    field_class Types::BaseField
-    input_object_class Types::BaseInputObject
+    # This is used for generating payload types
     object_class Types::BaseObject
+
+    # This is used for return fields on the mutation's payload
+    field_class Types::BaseField
+
+    # This is used for generating the `input: { ... }` object type
+    input_object_class Types::BaseInputObject
+
+    # https://github.com/rmosolgo/graphql-ruby/issues/1837
+    field :success, Boolean, null: false
+    field :errors, [String], null: true
+
+    protected
+
+    def authorize_user
+      return true if context[:current_user].present?
+
+      raise GraphQL::ExecutionError, "User not signed in"
+    end
   end
 end

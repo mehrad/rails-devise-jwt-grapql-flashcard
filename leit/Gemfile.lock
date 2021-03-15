@@ -227,6 +227,7 @@ DEPENDENCIES
   figaro (~> 1.2)
   graphiql-rails
   graphql (~> 1.12)
+  jwt
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
