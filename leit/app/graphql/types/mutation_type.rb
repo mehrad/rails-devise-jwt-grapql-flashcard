@@ -3,5 +3,6 @@ module Types
     field :sign_in, mutation: Mutations::SignInMutation
     field :sign_out, mutation: Mutations::SignOutMutation
     field :register_user, mutation: Mutations::RegisterUserMutation
+    field :add_flashcard, mutation: Mutations::AddFlashcardMutation
   end
 end
