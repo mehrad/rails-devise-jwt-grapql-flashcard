@@ -20,7 +20,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
 		result = result.to_h.deep_symbolize_keys.dig(:data, :addFlashcard)
 
 		expect(result.dig(:flashcard, :question)).to eq(variables["question"])
-		expect(result.dig(:flashcard, :boxes)).to eq(variables["boxes"])
+		expect(result.dig(:flashcard, :boxes)).to eq(variables["box_list"])
 		expect(result[:success]).to eq(true)
 		expect(result[:errors]).to be_blank
 	end
