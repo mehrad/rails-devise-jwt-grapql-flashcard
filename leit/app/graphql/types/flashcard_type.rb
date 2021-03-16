@@ -7,7 +7,7 @@ module Types
     field :user_id, Integer, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :boxes, String, null: true
+    field :boxes, [String], null: true
     field :user, Types::UserType, null: false
 
     def boxes
