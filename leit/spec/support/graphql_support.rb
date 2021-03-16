@@ -11,7 +11,9 @@ module GqlSupport
         context: context
       )
 
-      query.result if query.valid?
+      res = query.result
+      puts "Graqql Error: #{res.to_h}" unless query.valid?
+      res
     end
   
     private
