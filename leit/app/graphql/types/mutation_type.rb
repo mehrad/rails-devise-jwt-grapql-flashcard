@@ -5,5 +5,6 @@ module Types
     field :register_user, mutation: Mutations::RegisterUserMutation
     field :add_flashcard, mutation: Mutations::AddFlashcardMutation
     field :update_flashcard, mutation: Mutations::UpdateFlashcardMutation
+    field :add_studycard, mutation: Mutations::AddStudycardMutation
   end
 end
