@@ -30,6 +30,7 @@ RSpec.describe Mutations::ResetStudycardMutation do
 			resetStudycard(input: { id: $id}) {
 			studycard {
 				id
+				house
 				flashcard {
 					id
 					question

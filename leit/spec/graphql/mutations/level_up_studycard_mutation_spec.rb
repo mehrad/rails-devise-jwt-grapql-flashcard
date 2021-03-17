@@ -30,6 +30,7 @@ RSpec.describe Mutations::LevelUpStudycardMutation do
 			levelUpStudycard(input: { id: $id}) {
 			studycard {
 				id
+				house
 				flashcard {
 					id
 					question
