@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_123305) do
+ActiveRecord::Schema.define(version: 2021_03_17_191749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,22 @@ ActiveRecord::Schema.define(version: 2021_03_13_123305) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_flashcards_on_user_id"
+  end
+
+  create_table "studycards", force: :cascade do |t|
+    t.string "hint"
+    t.datetime "first_studied_at"
+    t.datetime "last_studied_at"
+    t.integer "state"
+    t.integer "house"
+    t.integer "reset_count"
+    t.integer "visit_count"
+    t.bigint "user_id", null: false
+    t.bigint "flashcard_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["flashcard_id"], name: "index_studycards_on_flashcard_id"
+    t.index ["user_id"], name: "index_studycards_on_user_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -86,5 +102,7 @@ ActiveRecord::Schema.define(version: 2021_03_13_123305) do
   end
 
   add_foreign_key "flashcards", "users"
+  add_foreign_key "studycards", "flashcards"
+  add_foreign_key "studycards", "users"
   add_foreign_key "taggings", "tags"
 end

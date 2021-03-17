@@ -22,4 +22,26 @@ RSpec.describe Types::QueryType do
       )
     end
   end
+
+  describe "studycards" do
+    let!(:studycards) { create_pair(:studycard) }
+
+    let(:query) do
+      %(query {
+        studycards {
+          hint
+        }
+      })
+    end
+
+    subject(:result) do
+      LeitSchema.execute(query).as_json
+    end
+
+    it "returns all studycards" do
+      expect(result.dig("data", "studycards")).to match_array(
+        studycards.map { |studycard| { "hint" => studycard.hint } }
+      )
+    end
+  end
 end

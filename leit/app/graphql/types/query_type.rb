@@ -7,15 +7,26 @@ module Types
     field :me, Types::UserType, null: true 
  
     field :flashcards,
-          [Types::FlashcardType],
-          null: false,
-          description: "Returns a list of flashcards"
-    def flashcards
-      Flashcard.preload(:user)
+        	[Types::FlashcardType],
+        	null: false,
+        	description: "Returns a list of flashcards"
+    
+    field :studycards,
+    		[Types::StudycardType],
+        	null: false,
+         	description: "Returns a list of stduycards"
+
+
+	def studycards
+		Studycard.preload(:user)
+	end
+
+	def flashcards
+    	Flashcard.preload(:user)
     end
 
     def me
-      context[:current_user]
+    	context[:current_user]
     end
   end
 end
