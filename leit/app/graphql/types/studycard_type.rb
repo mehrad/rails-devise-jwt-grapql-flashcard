@@ -10,6 +10,8 @@ module Types
     field :last_studied_at, GraphQL::Types::ISO8601DateTime, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :user_id, Integer, null: false
+    field :flashcard_id, Integer, null: false
     field :user, Types::UserType, null: false
     field :flashcard, Types::FlashcardType, null: false
 
