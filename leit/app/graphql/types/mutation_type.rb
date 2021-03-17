@@ -6,5 +6,7 @@ module Types
     field :add_flashcard, mutation: Mutations::AddFlashcardMutation
     field :update_flashcard, mutation: Mutations::UpdateFlashcardMutation
     field :add_studycard, mutation: Mutations::AddStudycardMutation
+    field :level_up_studycard, mutation: Mutations::LevelUpStudycardMutation
+    field :reset_studycard, mutation: Mutations::ResetStudycardMutation
   end
 end
