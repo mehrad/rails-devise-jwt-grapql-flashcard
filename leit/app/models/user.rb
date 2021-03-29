@@ -6,7 +6,6 @@ class User < ApplicationRecord
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	devise :database_authenticatable, :registerable,
 			:recoverable, :rememberable, :validatable, :token_authenticatable
-	has_many :flashcards
 
 	private
 	def generate_jwt
