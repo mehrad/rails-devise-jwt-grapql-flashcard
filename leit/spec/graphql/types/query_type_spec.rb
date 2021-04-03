@@ -46,4 +46,26 @@ RSpec.describe Types::QueryType do
       )
     end
   end
+
+  describe 'boxes' do
+    let!(:boxes) { create_pair(:box) }
+
+    let(:query) do
+      %(query {
+        boxes {
+          title
+        }
+      })
+    end
+
+    subject(:result) do
+      LeitSchema.execute(query).as_json
+    end
+
+    it 'returns all boxes' do
+      expect(result.dig('data', 'boxes')).to match_array(
+        boxes.map { |box| { 'title' => box.title } }
+      )
+    end
+  end
 end
