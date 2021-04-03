@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Gql::Interface do
   class MockClass
@@ -21,34 +21,34 @@ RSpec.describe Gql::Interface do
     end
   end
 
-  describe "#gql_id" do
-    it "returns the gql id" do
+  describe '#gql_id' do
+    it 'returns the gql id' do
       expect(MockClass.new.gql_id).to be_a(String)
       expect(MockClass.new.gql_id.length).to eq(20)
-      expect(Base64.decode64(MockClass.new.gql_id)).to eq("MockClass-123")
+      expect(Base64.decode64(MockClass.new.gql_id)).to eq('MockClass-123')
     end
   end
 
-  describe ".find_by_gql_id" do
-    it "finds the MockClass with the given gql id" do
+  describe '.find_by_gql_id' do
+    it 'finds the MockClass with the given gql id' do
       mock_class = MockClass.new(456)
 
-      expect(MockClass.find_by_gql_id(mock_class.gql_id).id).
-        to eq(mock_class.id)
+      expect(MockClass.find_by_gql_id(mock_class.gql_id).id)
+        .to eq(mock_class.id)
     end
 
-    it "raises an error when given invalid id" do
-      expect { MockClass.find_by_gql_id("bad-id") }.
-        to raise_error(GraphQL::ExecutionError)
+    it 'raises an error when given invalid id' do
+      expect { MockClass.find_by_gql_id('bad-id') }
+        .to raise_error(GraphQL::ExecutionError)
     end
   end
 
-  describe ".find_by_gql_ids" do
-    it "finds the MockClass with the given gql ids" do
+  describe '.find_by_gql_ids' do
+    it 'finds the MockClass with the given gql ids' do
       mock_class = MockClass.new(456)
 
-      expect(MockClass.find_by_gql_ids([mock_class.gql_id]).first.id).
-        to eq(mock_class.id)
+      expect(MockClass.find_by_gql_ids([mock_class.gql_id]).first.id)
+        .to eq(mock_class.id)
     end
   end
 end

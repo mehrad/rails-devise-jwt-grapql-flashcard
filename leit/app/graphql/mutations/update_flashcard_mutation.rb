@@ -1,34 +1,44 @@
+# frozen_string_literal: true
+
 module Mutations
-	class UpdateFlashcardMutation < Mutations::BaseMutation
-		graphql_name "UpdateFlashcard"
+  class UpdateFlashcardMutation < Mutations::BaseMutation
+    graphql_name 'UpdateFlashcard'
 
-		argument :id, String, required: true
-		argument :question, String, required: true
-		argument :answer, String, required: false
-		argument :box_list, [String], required: false
-		
-		field :flashcard, Types::FlashcardType, null: true
+    argument :id, String, required: true
+    argument :question, String, required: true
+    argument :answer, String, required: false
+    argument :tag_list, [String], required: false
+    argument :box_id, Integer, required: true
 
-		def resolve(id:, question:, answer: nil, box_list: nil)
-		GraphQL::ExecutionError.new("You need to authenticate to perform this action") if context[:current_user].nil?
-		user = context[:current_user]
-		
-		flashcard = Flashcard.find_by(id: id)
-		GraphQL::ExecutionError.new("Flashcard not found") if flashcard.nil?
-		
+    field :flashcard, Types::FlashcardType, null: true
 
-		success = flashcard&.update(
-			question: question,
-			answer: answer,
-			box_list: box_list,
-			user: user
-		) || false
+    def resolve(id:, question:, box_id:, answer: nil, tag_list: nil)
+      raise GraphQL::ExecutionError, 'You need to authenticate to perform this action' if context[:current_user].nil?
 
-		MutationResult.call(
-			obj: { flashcard: flashcard },
-			success: success,
-			errors: flashcard&.errors&.full_messages
-		)
-		end
-	end
+      user = context[:current_user]
+
+      flashcard = Flashcard.find_by(id: id)
+      raise GraphQL::ExecutionError, 'Flashcard not found' if flashcard.nil?
+
+      box = Box.find_by(id: box_id, user: user)
+
+      if box.nil? || !box.flashcards.include?(flashcard)
+        raise GraphQL::ExecutionError,
+              'You do not have autherization to perform this action'
+      end
+
+      success = flashcard&.update(
+        box: box,
+        question: question,
+        answer: answer,
+        tag_list: tag_list
+      ) || false
+
+      MutationResult.call(
+        obj: { flashcard: flashcard },
+        success: success,
+        errors: flashcard&.errors&.full_messages
+      )
+    end
+  end
 end

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "POST /graphql" do
-  it "executes the given query or mutation" do
+RSpec.describe 'POST /graphql' do
+  it 'executes the given query or mutation' do
     stub_schema_execute
 
-    variables = { "myVariables" => "test" }
-    query = "someLongQuery(input: { id: ID } { users { id name } })"
-    operation_name = "signIn"
+    variables = { 'myVariables' => 'test' }
+    query = 'someLongQuery(input: { id: ID } { users { id name } })'
+    operation_name = 'signIn'
 
     post graphql_path(
       format: :json,
@@ -23,10 +23,10 @@ RSpec.describe "POST /graphql" do
       context: { current_user: nil },
       operation_name: operation_name
     )
-    expect(json_body).to eq("success" => true)
+    expect(json_body).to eq('success' => true)
   end
 
-  it "sets the current_user context" do
+  it 'sets the current_user context' do
     stub_schema_execute
     user = sign_in_user
 
@@ -38,14 +38,14 @@ RSpec.describe "POST /graphql" do
       context: { current_user: user },
       operation_name: nil
     )
-    expect(json_body).to eq("success" => true)
+    expect(json_body).to eq('success' => true)
   end
 
   # ...
 
   def stub_schema_execute
-    allow(LeitSchema).
-      to receive(:execute).and_return(success: true)
+    allow(LeitSchema)
+      .to receive(:execute).and_return(success: true)
   end
 
   def json_body

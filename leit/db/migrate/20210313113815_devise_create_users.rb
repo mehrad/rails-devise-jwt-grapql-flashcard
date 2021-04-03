@@ -2,15 +2,15 @@
 
 class DeviseCreateUsers < ActiveRecord::Migration[6.1]
   def change
-    create_table :users do |t|   
+    create_table :users do |t|
       # Custom
       t.string :first_name, null: false
       t.string :last_name,  null: false
-      t.string :phone,  null: false
+      t.string :phone, null: false
 
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :email,              null: false, default: ''
+      t.string :encrypted_password, null: false, default: ''
 
       ## Recoverable
       t.string   :reset_password_token
@@ -38,7 +38,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.datetime :locked_at
 
       ## Token Authenticatable", "~> 1.1"
- 
+
       t.text :authentication_token
       t.datetime :authentication_token_created_at
 
@@ -51,6 +51,5 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
     add_index :users, :unlock_token,         unique: true
     add_index :users, :authentication_token, unique: true
     add_index :users, :phone,                unique: true
-
   end
 end

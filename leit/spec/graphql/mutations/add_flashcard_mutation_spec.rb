@@ -1,64 +1,72 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Mutations::AddFlashcardMutation do
-	it "adds in flashcard" do
-		user = create(:user)
+  it 'adds in flashcard' do
+    box = create(:box)
 
-		variables = {
-			"question" => "question?",
-			"answer" => "answer",
-			"box_list" => ["box1", "box2"],
-		}
+    variables = {
+      'box_id' => box.id,
+      'question' => 'question?',
+      'answer' => 'answer',
+      'tag_list' => %w[tag1 tag2]
+    }
 
-		context = {
-			current_user: user
-		}
+    context = {
+      current_user: box.user
+    }
 
-		result = gql_query(query: mutation, variables: variables, context: context)
-		result = result.to_h.deep_symbolize_keys.dig(:data, :addFlashcard)
+    result = gql_query(query: mutation, variables: variables, context: context)
+    result = result.to_h.deep_symbolize_keys.dig(:data, :addFlashcard)
 
-		expect(result.dig(:flashcard, :question)).to eq(variables["question"])
-		expect(result.dig(:flashcard, :boxes)).to eq(variables["box_list"])
-		expect(result[:success]).to eq(true)
-		expect(result[:errors]).to be_blank
-	end
+    expect(result.dig(:flashcard, :question)).to eq(variables['question'])
+    expect(result.dig(:flashcard, :tags)).to eq(variables['tag_list'])
+    expect(result[:success]).to eq(true)
+    expect(result[:errors]).to be_blank
+  end
 
-	it "raises authentication error without context" do
-		variables = {
-			"question" => "question?",
-			"answer" => "answer",
-			"box_list" => ["box1", "box2"],
-		}
-		flashcard = create(:flashcard, **variables.symbolize_keys)
+  it 'raises authentication error without context' do
+    box = create(:box)
 
-		result = gql_query(query: mutation, variables: variables)
-		result = result.to_h.deep_symbolize_keys.dig(:data, :addFlashcard)
+    variables = {
+      'box_id' => box.id,
+      'question' => 'question?',
+      'answer' => 'answer',
+      'tag_list' => %w[tag1 tag2]
+    }
 
+    context = {
+      current_user: nil
+    }
 
-		expect(result.dig(:errors, 0)).to eq("User must exist")
-		expect(result.dig(:data, :addFlashcard)).to be_blank
-	end
+    flashcard = create(:flashcard, **variables.symbolize_keys)
 
-	def mutation
-		<<~GQL
-		mutation AddFlashcard($question: String!, $answer: String!, $box_list: [String!]) {
-			addFlashcard(input: { question: $question, answer: $answer , boxList: $box_list}) {
-			flashcard {
-				id
-				question
-				answer
-				boxes
-				user {
-				id
-				email
-				}
-			}
-			success
-			errors
-			}
-		}
-		GQL
-	end
+    result = gql_query(query: mutation, variables: variables, context: context)
+
+    result = result.to_h.deep_symbolize_keys
+    expect(result.dig(:errors, 0, :message)).to eq('You need to authenticate to perform this action')
+    expect(result[:addFlashcard]).to be_blank
+  end
+
+  def mutation
+    <<~GQL
+      mutation AddFlashcard($box_id: Int!, $question: String!, $answer: String!, $tag_list: [String!]) {
+      	addFlashcard(input: { boxId: $box_id, question: $question, answer: $answer , tagList: $tag_list}) {
+      	flashcard {
+      		id
+      		question
+      		answer
+      		tags
+      		box {
+      			id
+      			title
+      		}
+      	}
+      	success
+      	errors
+      	}
+      }
+    GQL
+  end
 end

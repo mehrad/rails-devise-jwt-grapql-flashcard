@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class StudycardType < Types::BaseObject
     field :id, ID, null: false
@@ -14,6 +16,5 @@ module Types
     field :flashcard_id, Integer, null: false
     field :user, Types::UserType, null: false
     field :flashcard, Types::FlashcardType, null: false
-
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class MutationType < Types::BaseObject
     field :sign_in, mutation: Mutations::SignInMutation
@@ -8,5 +10,6 @@ module Types
     field :add_studycard, mutation: Mutations::AddStudycardMutation
     field :level_up_studycard, mutation: Mutations::LevelUpStudycardMutation
     field :reset_studycard, mutation: Mutations::ResetStudycardMutation
+    field :add_box, mutation: Mutations::AddBoxMutation
   end
 end

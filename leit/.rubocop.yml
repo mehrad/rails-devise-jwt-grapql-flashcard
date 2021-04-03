@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'bin/bundle'
+  NewCops: enable
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'

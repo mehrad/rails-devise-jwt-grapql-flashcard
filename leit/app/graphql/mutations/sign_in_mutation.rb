@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Mutations
   class SignInMutation < Mutations::BaseMutation
-    graphql_name "SignIn"
+    graphql_name 'SignIn'
 
     argument :email, String, required: true
     argument :password, String, required: true
@@ -15,12 +17,11 @@ module Mutations
           context[:current_user] = user
           MutationResult.call(obj: { user: user }, success: true)
         else
-          GraphQL::ExecutionError.new("Incorrect Email/Password")
+          GraphQL::ExecutionError.new('Incorrect Email/Password')
         end
       else
-        GraphQL::ExecutionError.new("User not registered on this application")
+        GraphQL::ExecutionError.new('User not registered on this application')
       end
     end
   end
 end
-  

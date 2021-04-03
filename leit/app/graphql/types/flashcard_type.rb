@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 module Types
   class FlashcardType < Types::BaseObject
     field :id, ID, null: false
     field :answer, String, null: true
     field :question, String, null: true
     field :image_url, String, null: true
-    field :user_id, Integer, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :boxes, [String], null: true
-    field :user, Types::UserType, null: false
+    field :tags, [String], null: true
+    field :box_id, Integer, null: true
+    field :box, Types::BoxType, null: true
 
-    def boxes
-      object.box_list
+    def tags
+      object.tag_list
     end
   end
 end
