@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe User do
+  describe 'associations' do
+    it { should have_many(:boxes).class_name('Box')}
+  end
+
   describe 'callbacks' do
     it 'creates an auth token before saving if one does not exist' do
       # See: Devise initializer `config.http_authenticatable = true`

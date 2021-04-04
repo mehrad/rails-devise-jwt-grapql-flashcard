@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Studycard, type: :model do
   let(:studycard) { create(:studycard) }
+  describe 'associations' do
+    it { should belong_to(:flashcard).class_name('Flashcard') }
+  end
+
   describe 'if answer is true' do
     it 'sends flashcard to next house' do
       prev_house = studycard.house

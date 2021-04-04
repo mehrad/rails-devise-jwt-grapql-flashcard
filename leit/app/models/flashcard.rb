@@ -3,4 +3,5 @@
 class Flashcard < ApplicationRecord
   acts_as_taggable_on :tags
   belongs_to :box
+  has_one :studycard
 end

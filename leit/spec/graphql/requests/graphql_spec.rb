@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'POST /graphql', :type => :request  do
+RSpec.describe 'POST /graphql', type: :request do
   xit 'executes the given query or mutation' do
     stub_schema_execute
 
