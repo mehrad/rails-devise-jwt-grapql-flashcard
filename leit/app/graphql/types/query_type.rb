@@ -11,28 +11,37 @@ module Types
     field :boxes,
           [Types::BoxType],
           null: false,
-          description: 'Returns a list of boxes'
+          description: 'Returns a list of boxes' do
+      argument :limit, Integer, required: false
+      argument :offset, Integer, required: false
+    end
 
     field :flashcards,
           [Types::FlashcardType],
           null: false,
-          description: 'Returns a list of flashcards'
+          description: 'Returns a list of flashcards' do
+      argument :limit, Integer, required: false
+      argument :offset, Integer, required: false
+    end
 
     field :studycards,
           [Types::StudycardType],
           null: false,
-          description: 'Returns a list of stduycards'
+          description: 'Returns a list of stduycards' do
+            argument :limit, Integer, required: false
+            argument :offset, Integer, required: false
+          end
 
-    def boxes
-      Box.preload(:user)
+    def boxes(limit: 20, offset: 0)
+      Box.preload(:user).limit(limit).offset(offset)
     end
 
-    def studycards
-      Studycard.preload(:flashcard)
+    def studycards(limit: 20, offset: 0)
+      Studycard.preload(:flashcard).limit(limit).offset(offset)
     end
 
-    def flashcards
-      Flashcard.preload(:box)
+    def flashcards(limit: 20, offset: 0)
+      Flashcard.preload(:box).limit(limit).offset(offset)
     end
 
     def me
