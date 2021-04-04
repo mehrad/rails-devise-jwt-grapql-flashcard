@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  rolify
   include Gql::Interface
   before_save :create_token
   # Include default devise modules. Others available are:
@@ -9,6 +10,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :token_authenticatable
 
   has_many :boxes
+
+  def admin?
+    has_role? :admin
+  end
 
   private
 

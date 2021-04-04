@@ -63,3 +63,5 @@ gem 'jwt'
 gem 'acts-as-taggable-on', '~> 7.0'
 
 gem 'rubocop', require: false
+
+gem 'rolify'

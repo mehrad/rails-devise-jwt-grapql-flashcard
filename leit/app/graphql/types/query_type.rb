@@ -33,7 +33,7 @@ module Types
           end
 
     def boxes(limit: 20, offset: 0)
-      Box.preload(:user).limit(limit).offset(offset)
+      Box.boxes_for(me).limit(limit).offset(offset)
     end
 
     def studycards(limit: 20, offset: 0)

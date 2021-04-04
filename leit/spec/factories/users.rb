@@ -9,5 +9,9 @@ FactoryBot.define do
     phone { Faker::PhoneNumber.cell_phone }
     email { Faker::Internet.email }
     password { Faker::Internet.password }
+
+    factory :admin do
+      after(:create) { |user| user.add_role(:admin) }
+    end
   end
 end

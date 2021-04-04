@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_210_329_092_838) do
+ActiveRecord::Schema.define(version: 20_210_404_144_441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 20_210_329_092_838) do
     t.datetime 'updated_at', precision: 6, null: false
     t.bigint 'box_id'
     t.index ['box_id'], name: 'index_flashcards_on_box_id'
+  end
+
+  create_table 'roles', force: :cascade do |t|
+    t.string 'name'
+    t.string 'resource_type'
+    t.bigint 'resource_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[name resource_type resource_id], name: 'index_roles_on_name_and_resource_type_and_resource_id'
+    t.index %w[resource_type resource_id], name: 'index_roles_on_resource'
   end
 
   create_table 'studycards', force: :cascade do |t|
@@ -110,6 +120,14 @@ ActiveRecord::Schema.define(version: 20_210_329_092_838) do
     t.index ['phone'], name: 'index_users_on_phone', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
     t.index ['unlock_token'], name: 'index_users_on_unlock_token', unique: true
+  end
+
+  create_table 'users_roles', id: false, force: :cascade do |t|
+    t.bigint 'user_id'
+    t.bigint 'role_id'
+    t.index ['role_id'], name: 'index_users_roles_on_role_id'
+    t.index %w[user_id role_id], name: 'index_users_roles_on_user_id_and_role_id'
+    t.index ['user_id'], name: 'index_users_roles_on_user_id'
   end
 
   add_foreign_key 'boxes', 'users'
