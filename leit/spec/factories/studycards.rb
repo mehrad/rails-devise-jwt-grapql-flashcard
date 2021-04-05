@@ -11,7 +11,5 @@ FactoryBot.define do
     house { 0 }
     reset_count { 0 }
     visit_count { 0 }
-    user
-    flashcard
   end
 end

@@ -6,6 +6,8 @@ module Types
     field :answer, String, null: true
     field :question, String, null: true
     field :image_url, String, null: true
+    field :house, Integer, null: true
+    field :hint, Integer, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :tags, [String], null: true

@@ -28,7 +28,6 @@ RSpec.describe Mutations::AddBoxMutation do
       'title' => 'title?',
       'desc' => 'desc'
     }
-    box = create(:box, **variables.symbolize_keys)
 
     context = {
       current_user: nil

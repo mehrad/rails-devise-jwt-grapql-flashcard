@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Mutations::AddFlashcardMutation do
   it 'adds in flashcard' do
-    box = create(:box)
+    user = create(:user)
+    box = user.boxes.first
 
     variables = {
       'box_id' => box.id,
@@ -14,7 +15,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
     }
 
     context = {
-      current_user: box.user
+      current_user: user
     }
 
     result = gql_query(query: mutation, variables: variables, context: context)
@@ -27,7 +28,8 @@ RSpec.describe Mutations::AddFlashcardMutation do
   end
 
   it 'raises authentication error without context' do
-    box = create(:box)
+    user = create(:user)
+    box = user.boxes.first
 
     variables = {
       'box_id' => box.id,

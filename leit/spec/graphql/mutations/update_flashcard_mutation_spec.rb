@@ -4,11 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateFlashcardMutation do
   it 'updates in flashcards' do
-    flashcard = create(:flashcard)
-    box = create(:box)
-    box.flashcards << flashcard
-    box.save!
-    box.reload
+    user = create(:user)
+    box = user.boxes.first
+    flashcard = box.flashcards.first
 
     variables = {
       'id' => flashcard.id.to_s,
@@ -33,7 +31,9 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises not found error if there is no flashcard ' do
-    box = create(:box)
+    user = create(:user)
+    box = user.boxes.first
+    flashcard = box.flashcards.first
 
     variables = {
       'id' => '1',
@@ -54,8 +54,9 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises authentication error without context' do
-    flashcard = create(:flashcard)
-    box = create(:box)
+    user = create(:user)
+    box = user.boxes.first
+    flashcard = box.flashcards.first
 
     variables = {
       'id' => flashcard.id.to_s,
@@ -75,8 +76,11 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises autherization error if flashcard does not belong to user' do
-    flashcard = create(:flashcard)
-    box = create(:box)
+    user = create(:user)
+    box = user.boxes.first
+    flashcard = box.flashcards.first
+
+    second_user = create(:user)
 
     variables = {
       'id' => flashcard.id.to_s,
@@ -87,7 +91,7 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
     }
 
     context = {
-      current_user: box.user
+      current_user: second_user
     }
 
     result = gql_query(query: mutation, variables: variables, context: context)
