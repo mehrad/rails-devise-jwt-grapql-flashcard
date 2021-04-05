@@ -9,7 +9,11 @@ module Mutations
     field :flashcard, Types::FlashcardType, null: true
 
     def resolve(id:)
-      raise GraphQL::ExecutionError.new, 'You need to authenticate to perform this action' if context[:current_user].nil?
+      if context[:current_user].nil?
+        raise GraphQL::ExecutionError.new,
+              'You need to authenticate to perform this action'
+      end
+
       user = context[:current_user]
 
       flashcard = Flashcard.find_by(id: id)

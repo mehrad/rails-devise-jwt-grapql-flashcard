@@ -10,7 +10,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
 
-    boxes { build_list :box, 3}
+    boxes { build_list :box, 3 }
 
     factory :admin do
       after(:create) { |user| user.add_role(:admin) }

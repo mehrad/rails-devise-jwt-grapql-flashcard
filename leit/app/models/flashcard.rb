@@ -5,7 +5,7 @@ class Flashcard < ApplicationRecord
   belongs_to :box
   has_many :studycards
 
-  ACTIVE_STUDY_DELEGATES = %w(hint state reset_count house reset! level_up!)
+  ACTIVE_STUDY_DELEGATES = %w[hint state reset_count house reset! level_up!].freeze
 
   # ACTIVE_STUDY_DELEGATES.each do |method_name|
   #   eval <<-DEFINE_METHOD
@@ -18,16 +18,8 @@ class Flashcard < ApplicationRecord
   def self.flashcards_for(user, box_id)
     return all if user&.admin?
 
-    puts '^'*100
-    puts box_id
-    puts '^'*100
+    return where(box: [user&.boxes]) if box_id.nil?
 
-    
-    return where(box: [ user&.boxes ] ) if box_id.nil?
-
-    puts "***"
-    puts box_id
-    puts '*' * 100
     where(box_id: box_id)
   end
 

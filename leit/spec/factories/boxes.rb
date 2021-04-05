@@ -6,6 +6,6 @@ FactoryBot.define do
   factory :box do
     title { Faker::ProgrammingLanguage.name }
     desc { Faker::ProgrammingLanguage.creator }
-    flashcards { build_list :flashcard, 3}
+    flashcards { build_list :flashcard, 3 }
   end
 end

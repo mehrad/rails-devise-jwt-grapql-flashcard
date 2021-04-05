@@ -20,6 +20,7 @@ module Types
           [Types::FlashcardType],
           null: false,
           description: 'Returns a list of flashcards' do
+      argument :box_id, Integer, required: false
       argument :limit, Integer, required: false
       argument :offset, Integer, required: false
     end
@@ -40,8 +41,8 @@ module Types
       Studycard.preload(:flashcard).limit(limit).offset(offset)
     end
 
-    def flashcards(limit: 20, offset: 0)
-      Flashcard.preload(:box).limit(limit).offset(offset)
+    def flashcards(limit: 20, offset: 0, box_id: nil)
+      Flashcard.flashcards_for(me, box_id).limit(limit).offset(offset)
     end
 
     def me

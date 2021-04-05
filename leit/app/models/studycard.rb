@@ -7,14 +7,13 @@ class Studycard < ApplicationRecord
   delegate :answer, to: :flashcard
   delegate :tag_list, to: :flashcard
 
-  
   def level_up
     self.house = house.to_i + 1
   end
-  
+
   def level_up!
-    self.level_up
-    self.save!
+    level_up
+    save!
   end
 
   def reset
@@ -23,7 +22,7 @@ class Studycard < ApplicationRecord
   end
 
   def reset!
-    self.reset
-    self.save!
+    reset
+    save!
   end
 end
