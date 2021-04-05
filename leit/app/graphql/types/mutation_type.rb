@@ -7,9 +7,8 @@ module Types
     field :register_user, mutation: Mutations::RegisterUserMutation
     field :add_flashcard, mutation: Mutations::AddFlashcardMutation
     field :update_flashcard, mutation: Mutations::UpdateFlashcardMutation
-    field :add_studycard, mutation: Mutations::AddStudycardMutation
-    field :level_up_studycard, mutation: Mutations::LevelUpStudycardMutation
-    field :reset_studycard, mutation: Mutations::ResetStudycardMutation
+    field :level_up_card, mutation: Mutations::LevelUpCardMutation
+    field :reset_card, mutation: Mutations::ResetCardMutation
     field :add_box, mutation: Mutations::AddBoxMutation
   end
 end
