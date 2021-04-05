@@ -7,12 +7,20 @@ module Types
     field :question, String, null: true
     field :image_url, String, null: true
     field :house, Integer, null: true
-    field :hint, Integer, null: true
+    field :hint, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :tags, [String], null: true
     field :box_id, Integer, null: true
     field :box, Types::BoxType, null: true
+
+    def hint
+     object.hint
+    end
+
+    def house
+      object.house
+    end
 
     def tags
       object.tag_list

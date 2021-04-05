@@ -11,6 +11,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
       'box_id' => box.id,
       'question' => 'question?',
       'answer' => 'answer',
+      'hint' => 'hint',
       'tag_list' => %w[tag1 tag2]
     }
 
@@ -22,6 +23,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
     result = result.to_h.deep_symbolize_keys.dig(:data, :addFlashcard)
 
     expect(result.dig(:flashcard, :question)).to eq(variables['question'])
+    expect(result.dig(:flashcard, :hint)).to eq(variables['hint'])
     expect(result.dig(:flashcard, :tags)).to eq(variables['tag_list'])
     expect(result[:success]).to eq(true)
     expect(result[:errors]).to be_blank
@@ -35,14 +37,13 @@ RSpec.describe Mutations::AddFlashcardMutation do
       'box_id' => box.id,
       'question' => 'question?',
       'answer' => 'answer',
+      'hint' => 'hint',
       'tag_list' => %w[tag1 tag2]
     }
 
     context = {
       current_user: nil
     }
-
-    flashcard = create(:flashcard, **variables.symbolize_keys)
 
     result = gql_query(query: mutation, variables: variables, context: context)
 
@@ -53,13 +54,15 @@ RSpec.describe Mutations::AddFlashcardMutation do
 
   def mutation
     <<~GQL
-      mutation AddFlashcard($box_id: Int!, $question: String!, $answer: String!, $tag_list: [String!]) {
-      	addFlashcard(input: { boxId: $box_id, question: $question, answer: $answer , tagList: $tag_list}) {
+      mutation AddFlashcard($box_id: Int!, $question: String!, $answer: String!, $hint: String!, $tag_list: [String!]) {
+      	addFlashcard(input: { boxId: $box_id, question: $question, answer: $answer, hint: $hint, tagList: $tag_list}) {
       	flashcard {
       		id
       		question
       		answer
       		tags
+          hint
+          house
       		box {
       			id
       			title
