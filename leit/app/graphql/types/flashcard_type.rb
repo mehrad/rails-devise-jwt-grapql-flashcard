@@ -8,14 +8,19 @@ module Types
     field :image_url, String, null: true
     field :house, Integer, null: true
     field :hint, String, null: true
+    field :last_studied_at, GraphQL::Types::ISO8601DateTime, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :tags, [String], null: true
     field :box_id, Integer, null: true
     field :box, Types::BoxType, null: true
 
+    def last_studied_at
+      object.last_studied_at
+    end
+
     def hint
-     object.hint
+      object.hint
     end
 
     def house

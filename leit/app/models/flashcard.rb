@@ -23,6 +23,10 @@ class Flashcard < ApplicationRecord
     where(box_id: box_id)
   end
 
+  def last_studied_at
+    active_study_card.last_studied_at
+  end
+
   def hint
     active_study_card.hint
   end

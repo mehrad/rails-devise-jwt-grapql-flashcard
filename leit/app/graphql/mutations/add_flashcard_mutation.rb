@@ -21,29 +21,20 @@ module Mutations
 
       raise GraphQL::ExecutionError, 'You do not have autherization to perform this action' if box.nil?
 
-      # TODO(mahrad): add to study command service
-      flashcard = Flashcard.new(
+      variables = {
         box_id: box_id,
         question: question,
         answer: answer,
-        tag_list: tag_list
-      )
-   
-      success = flashcard.save
+        tag_list: tag_list,
+        hint: hint
+      }
 
-      if success
-        studycard = Studycard.new(
-          flashcard: flashcard,
-          hint: hint
-        )
-      end
-
-      success &&= studycard.save
+      flashcard, success, errors = FlashCardStudyCommandService.new(variables).call
 
       MutationResult.call(
         obj: { flashcard: flashcard },
         success: success,
-        errors: flashcard.errors.full_messages
+        errors: errors
       )
     end
   end

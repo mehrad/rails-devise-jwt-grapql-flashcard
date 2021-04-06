@@ -63,6 +63,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
       		tags
           hint
           house
+          lastStudiedAt
       		box {
       			id
       			title
