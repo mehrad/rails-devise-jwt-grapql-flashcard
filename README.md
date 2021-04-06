@@ -288,3 +288,9 @@ query Flashcard {
 ```
 
 ```
+
+## Todos
+* [ ] Join flashcards adn studycard fpr better uery
+* [ ] Add more test for edge case 
+* [ ] Add resolver or filter 
+
