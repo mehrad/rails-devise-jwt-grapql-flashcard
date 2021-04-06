@@ -51,6 +51,10 @@ class Flashcard < ApplicationRecord
     active_study_card.level_up!
   end
 
+  def intervaled?(intervals)
+    active_study_card.intervaled?(intervals)
+  end
+
   def active_study_card
     studycards.last
   end

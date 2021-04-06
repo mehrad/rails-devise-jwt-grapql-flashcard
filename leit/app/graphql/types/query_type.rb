@@ -26,19 +26,22 @@ module Types
     end
 
     field :studycards,
-          [Types::StudycardType],
+          [Types::FlashcardType],
           null: false,
           description: 'Returns a list of stduycards' do
             argument :limit, Integer, required: false
             argument :offset, Integer, required: false
+            argument :box_id, Integer, required: true
           end
 
     def boxes(limit: 20, offset: 0)
       Box.boxes_for(me).limit(limit).offset(offset)
     end
 
-    def studycards(limit: 20, offset: 0)
-      Studycard.preload(:flashcard).limit(limit).offset(offset)
+    def studycards(box_id:, limit: 20, offset: 0)
+      box = Box.boxes_for(me).where(id: box_id).first
+      flashcards, success, errors = FlashCardStudyQueryService.new(box: box, limit: limit, offset: offset).call
+      flashcards
     end
 
     def flashcards(limit: 20, offset: 0, box_id: nil)

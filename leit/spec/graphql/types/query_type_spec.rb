@@ -92,13 +92,19 @@ RSpec.describe Types::QueryType do
   end
 
   describe 'studycards' do
-    let(:user) { create(:user_with_boxes_flashcards_studycards) }
-    let(:flashcards) { user.boxes.first.flashcards }
+    let(:user) { create(:user) }
+    let(:box) { create(:box, user: user) }
+    let(:flashcard) { create(:flashcard, box: box) }
+    let!(:studycards) { create_pair(:studycard, flashcard: flashcard) }
 
     let(:query) do
       %(query {
-        studycards(box_id: 1, offset:1, limit:2) {
+        studycards(box_id: 1, offset:0, limit:2) {
+          question
+          answer
           hint
+          house
+          last_studied_at
         }
       })
     end
@@ -109,7 +115,7 @@ RSpec.describe Types::QueryType do
 
     xit 'returns all studycards' do
       expect(result.dig('data', 'studycards')).to match_array(
-        studycards.last(2).map { |studycard| { 'hint' => studycard.hint } }
+        studycards.map { |studycard| { 'hint' => studycard.hint } }
       )
     end
   end

@@ -14,12 +14,12 @@ class FlashCardStudyQueryService
 
     return [nil, false, 'Box must exists'] if box.nil?
 
+    return [nil, false, 'Box must have flashcards'] if box.flashcards.nil?
+
     res = []
 
     box.flashcards.find_each do |flashcard|
-      flashcard.studycards.find_each do |studycard|
-        res << studycard if studycard.intervaled?(STUDY_INTERVALS)
-      end
+        res << flashcard if flashcard.intervaled?(STUDY_INTERVALS)
     end
 
     [res, true, nil]
