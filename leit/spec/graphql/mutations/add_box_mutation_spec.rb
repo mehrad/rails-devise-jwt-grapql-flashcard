@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::AddBoxMutation do
   it 'adds in box' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
 
     variables = {
       'title' => 'title?',

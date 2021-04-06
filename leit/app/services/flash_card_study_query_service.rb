@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+class FlashCardStudyQueryService
+  STUDY_INTERVALS = [0, 2, 7, 15, 29].freeze
+
+  def initialize(**args)
+    @args = args
+  end
+
+  def call
+    limit = args[:limit] || 20
+    offset = args[:offset] || 0
+    box = args[:box]
+
+    return [nil, false, 'Box must exists'] if box.nil?
+
+    res = []
+
+    box.flashcards.find_each do |flashcard|
+      flashcard.studycards.find_each do |studycard|
+        res << studycard if studycard.intervaled?(STUDY_INTERVALS)
+      end
+    end
+
+    [res, true, nil]
+  end
+
+  private
+
+  attr_reader :args
+end

@@ -9,14 +9,14 @@ RSpec.describe Flashcard, type: :model do
   end
 
   describe '#create' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user_with_boxes_flashcards_studycards) }
     let!(:flashcard) { user.boxes.first.flashcards.first }
 
     it { expect(flashcard.studycards).not_to be_empty }
   end
 
   describe '#StudyLogic' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user_with_boxes_flashcards_studycards) }
     let!(:flashcard) { user.boxes.first.flashcards.first }
 
     context 'if answer is true' do

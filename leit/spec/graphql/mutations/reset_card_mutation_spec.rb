@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::ResetCardMutation do
   it 'level up a flashcard' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     flashcard = user.boxes.first.flashcards.first
 
     variables = {

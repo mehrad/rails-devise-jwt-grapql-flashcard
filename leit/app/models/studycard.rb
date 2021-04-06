@@ -25,4 +25,10 @@ class Studycard < ApplicationRecord
     reset
     save!
   end
+
+  def intervaled?(intervals)
+    return false if house >= intervals.size
+
+    Time.now > last_studied_at + intervals[house].days
+  end
 end

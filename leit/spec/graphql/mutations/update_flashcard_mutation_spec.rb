@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::UpdateFlashcardMutation do
   it 'updates in flashcards' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
     flashcard = box.flashcards.first
 
@@ -31,7 +31,7 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises not found error if there is no flashcard ' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
     flashcard = box.flashcards.first
 
@@ -54,7 +54,7 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises authentication error without context' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
     flashcard = box.flashcards.first
 
@@ -76,11 +76,11 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
   end
 
   it 'raises autherization error if flashcard does not belong to user' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
     flashcard = box.flashcards.first
 
-    second_user = create(:user)
+    second_user = create(:user_with_boxes_flashcards_studycards)
 
     variables = {
       'id' => flashcard.id.to_s,

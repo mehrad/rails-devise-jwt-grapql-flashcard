@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe FlashCardStudyCommandService, type: :model do
   describe '#call' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user_with_boxes_flashcards_studycards) }
 
     context 'with correct variables' do
       let(:variables) do

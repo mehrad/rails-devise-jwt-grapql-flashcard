@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Types::QueryType do
   describe 'flashcards' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user_with_boxes_flashcards_studycards) }
     let!(:flashcards) { user.boxes.collect(&:flashcards).flatten! }
-    let!(:admin) { create(:admin) }
+    let!(:admin) { create(:admin_with_boxes_flashcards_studycards) }
     let!(:admin_flashcards) { admin.boxes.collect(&:flashcards).flatten! }
     let!(:all_flashcards) { admin_flashcards + flashcards }
 
@@ -92,7 +92,7 @@ RSpec.describe Types::QueryType do
   end
 
   describe 'studycards' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:flashcards) { user.boxes.first.flashcards }
 
     let(:query) do
@@ -115,9 +115,9 @@ RSpec.describe Types::QueryType do
   end
 
   describe 'boxes' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:boxes) { user.boxes }
-    let!(:admin) { create(:admin) }
+    let!(:admin) { create(:admin_with_boxes_flashcards_studycards) }
     let(:admin_boxes) { admin.boxes }
     let!(:all_boxes) { admin_boxes + boxes }
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Mutations::AddFlashcardMutation do
   it 'adds in flashcard' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
 
     variables = {
@@ -30,7 +30,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
   end
 
   it 'raises authentication error without context' do
-    user = create(:user)
+    user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
 
     variables = {
