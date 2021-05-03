@@ -99,11 +99,9 @@ Studycard.create!(
   [
     {
       flashcard: mahrad.boxes.first.flashcards.first,
-      user: mahrad
     },
     {
       flashcard: masoud.boxes.first.flashcards.first,
-      user: masoud
     }
 
   ]

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   private
 
   def current_user
+    logger.debug(request.headers['Authorization'])
     token = request.headers['Authorization'].to_s
     email = Base64.decode64(token)
     User.find_by(email: email)

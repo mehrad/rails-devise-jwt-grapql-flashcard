@@ -98,13 +98,14 @@ RSpec.describe Types::QueryType do
     let!(:studycards) { create_pair(:studycard, flashcard: flashcard) }
 
     let(:query) do
-      %(query {
-        studycards(box_id: 1, offset:0, limit:2) {
+      %(query Studycard {
+        studycards(boxId: 21) {
+          id
           question
           answer
-          hint
           house
-          last_studied_at
+          hint
+          lastStudiedAt
         }
       })
     end
