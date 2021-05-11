@@ -10,5 +10,6 @@ module Types
     field :level_up_card, mutation: Mutations::LevelUpCardMutation
     field :reset_card, mutation: Mutations::ResetCardMutation
     field :add_box, mutation: Mutations::AddBoxMutation
+    field :delete_box, mutation: Mutations::DeleteBoxMutation
   end
 end

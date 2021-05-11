@@ -9,7 +9,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :token_authenticatable
 
-  has_many :boxes
+  has_many :boxes, dependent: :destroy
 
   def admin?
     has_role? :admin

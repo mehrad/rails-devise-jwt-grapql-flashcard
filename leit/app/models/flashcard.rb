@@ -3,7 +3,7 @@
 class Flashcard < ApplicationRecord
   acts_as_taggable_on :tags
   belongs_to :box
-  has_many :studycards
+  has_many :studycards, dependent: :destroy
 
   ACTIVE_STUDY_DELEGATES = %w[hint state reset_count house reset! level_up!].freeze
 
