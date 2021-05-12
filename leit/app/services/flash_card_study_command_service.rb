@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FlashCardStudyCommandService
-  def initialize(**args)
+  def initialize(args)
     @args = args
   end
 

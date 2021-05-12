@@ -3,7 +3,7 @@
 class FlashCardStudyQueryService
   STUDY_INTERVALS = [0, 2, 7, 15, 29].freeze
 
-  def initialize(**args)
+  def initialize(args)
     @args = args
   end
 
@@ -18,7 +18,7 @@ class FlashCardStudyQueryService
 
     res = []
 
-    box.flashcards.find_each do |flashcard|
+    box.flashcards.each do |flashcard|
         res << flashcard if flashcard.intervaled?(STUDY_INTERVALS)
     end
 

@@ -37,8 +37,9 @@ class Studycard < ApplicationRecord
   def intervaled?(intervals)
     return true if house.to_i.zero?
     return false if house >= intervals.size
-    last_studied_at ||= Time.now
 
-    Time.now > last_studied_at + intervals[house].days
+    self.last_studied_at ||= Time.now
+
+    Time.now >= self.last_studied_at + intervals[house].days
   end
 end

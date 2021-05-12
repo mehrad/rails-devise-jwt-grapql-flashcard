@@ -6,7 +6,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
   describe '#call' do
     let(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:user_box) { user.boxes.first }
-    context 'with right arguments' do
+    context '#with right arguments' do
       xit 'returns last availables study cards of a box properly' do
         subject = FlashCardStudyQueryService.new(
           limit: 20,
@@ -44,7 +44,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         {
           limit: 1,
           offset: 0,
-          box: user_box
+          box: box
         }
       end
 
@@ -53,7 +53,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
       let(:flashcard) { create(:flashcard, box: box) }
       let(:studycard) { create(:studycard, flashcard: flashcard) }
 
-      context 'zero house' do
+      context '#zero house' do
         before { studycard.update!(house: 0) }
 
         it 'shows in the same as last study' do
@@ -70,7 +70,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context 'first house' do
+      context '#first house' do
         before { studycard.update!(house: 1) }
 
         it 'does not show before second day passed last study' do
@@ -88,7 +88,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context 'second house' do
+      context '#second house' do
         before { studycard.update!(house: 2) }
 
         it 'does not show before 7th day passed last study' do
@@ -106,7 +106,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context 'third house' do
+      context '#third house' do
         before { studycard.update!(house: 3) }
 
         it 'does not show before 15th day passed last study' do
@@ -124,7 +124,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context 'forth house' do
+      context '#forth house' do
         before { studycard.update!(house: 4) }
 
         it 'does not show before 29th day passed last study' do
