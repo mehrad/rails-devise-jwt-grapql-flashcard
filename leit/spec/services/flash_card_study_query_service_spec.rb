@@ -56,13 +56,13 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
       context '#zero house' do
         before { studycard.update!(house: 0) }
 
-        it 'shows in the same as last study' do
+        it 'does not shows at the same time as last study' do
           studycard.update!(last_studied_at: Time.now)
           to_study_cards, success, errors = subject.call
-          expect(to_study_cards).to match_array([flashcard])
+          expect(to_study_cards).to be_empty
         end
 
-        it 'shows after 1 day passed last study' do
+        it 'shows after 1 or more days passed last study' do
           studycard.update!(last_studied_at: (Time.now - 1.days))
           studycard.reload
           to_study_cards, success, errors = subject.call
@@ -128,7 +128,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         before { studycard.update!(house: 4) }
 
         it 'does not show before 29th day passed last study' do
-          studycard.update!(last_studied_at: (Time.now - 29.days))
+          studycard.update!(last_studied_at: (Time.now - 28.days))
           studycard.reload
           to_study_cards, success, errors = subject.call
           expect(to_study_cards).to be_empty
