@@ -39,6 +39,6 @@ class Studycard < ApplicationRecord
 
     self.last_studied_at ||= Time.now
 
-    Time.now >= self.last_studied_at + intervals[house].days
+    Time.now >= self.last_studied_at + intervals[house.to_i].days
   end
 end
