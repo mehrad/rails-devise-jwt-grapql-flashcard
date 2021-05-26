@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Study card model, for each time a flash card being studied
 class Studycard < ApplicationRecord
   belongs_to :flashcard
 
@@ -29,9 +30,7 @@ class Studycard < ApplicationRecord
   end
 
   def after_initialize
-    if new_record?
-      self.last_studied_at ||= Time.now
-    end
+    self.last_studied_at ||= Time.now if new_record?
   end
 
   def intervaled?(intervals)

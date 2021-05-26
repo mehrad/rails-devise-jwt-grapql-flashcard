@@ -98,10 +98,10 @@ Flashcard.create!(
 Studycard.create!(
   [
     {
-      flashcard: mahrad.boxes.first.flashcards.first,
+      flashcard: mahrad.boxes.first.flashcards.first
     },
     {
-      flashcard: masoud.boxes.first.flashcards.first,
+      flashcard: masoud.boxes.first.flashcards.first
     }
 
   ]

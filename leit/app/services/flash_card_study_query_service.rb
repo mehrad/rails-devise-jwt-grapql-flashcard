@@ -19,7 +19,7 @@ class FlashCardStudyQueryService
     res = []
 
     box.flashcards.each do |flashcard|
-        res << flashcard if flashcard.intervaled?(STUDY_INTERVALS)
+      res << flashcard if flashcard.intervaled?(STUDY_INTERVALS)
     end
 
     [res, true, nil]

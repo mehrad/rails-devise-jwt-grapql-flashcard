@@ -56,7 +56,7 @@ RSpec.describe Mutations::RegisterUserMutation do
     result = gql_query(query: mutation, variables: variables)
              .to_h.deep_symbolize_keys
 
-    expect(result.dig(:errors, 0, :message)).to eq("Invalid Attributes for User: Email has already been taken")
+    expect(result.dig(:errors, 0, :message)).to eq('Invalid Attributes for User: Email has already been taken')
     expect(result.dig(:data, :registerUser)).to be_blank
   end
 
