@@ -1,47 +1,51 @@
 # rails-devise-jwt-grapql-flashcard
-A rails app with devise jwt and GraphQL to implement flashcard quiz like leitnerz box 
+A rails app with devise jwt and GraphQL to implement flashcard quiz like leitnerz box
+
+## Live demo
+
+### Front-End
+ Here you cand find a sample react app to use this backend 
+    https://boiling-reef-96946.herokuapp.com/
+ ### Back-End
+    https://fast-basin-51900.herokuapp.com/graphql
 
 ## GraphQL
 Test these querys on localhost:4000/graphiql
 
 1. To Get the authorisation code call this first.   
 
+Either register a user
+
+```
+ mutation registerUser($email: String!, $password: String!) {
+        registerUser(input: {email: $email, password: $password }) {
+          user {
+            id
+            email
+            authenticationToken
+          }
+          success
+          errors
+        }
+      }
 ```
 
-    mutation SignIn{
+Or sign in 
 
-    	signIn(
+```
 
-        input: {
-
-          email:"maosud@gmail.com"
-
-          password: "123123123"
-
+    mutation signIn($email: String!, $password: String!) {
+        signIn(input: { email: $email, password: $password }) {
+          user {
+            id
+            firstName
+            lastName
+            authenticationToken
+          }
+          success
+          errors
         }
-
-      ) {
-
-        user {
-
-                id
-
-                firstName
-
-                lastName
-
-                authenticationToken
-
-              }
-
-              success
-
-              errors
-
-            }
-
-    }
-
+      }
 ```
 
 2. Then get active user with given autherization, set this with a ModHeader extesnion
@@ -53,6 +57,7 @@ Test these querys on localhost:4000/graphiql
       me {
 
         id
+        email
 
       } 
 
@@ -64,32 +69,33 @@ Test these querys on localhost:4000/graphiql
 
 ```
 
-mutation AddBox {
+ mutation AddBox($title: String!, $desc: String!) {
+      	addBox(input: { title: $title, desc: $desc }) {
+      	box {
+      		id
+      		title
+      		desc
+      		user {
+      			id
+      			email
+      		}
+      	}
+      	success
+      	errors
+      	}
+     }
 
-  addBox(input: {title: "test title", desc:"test desc"}) {
+```
 
-    box {
+Or delete
 
-      id
-
-      title
-
-      desc
-
-      user {
-
-        id
-
-        email
-
+```
+ mutation DeleteBox($id: ID!) {
+      	deleteBox(input: { id: $id }) {
+      	success
+      	errors
+      	}
       }
-
-    }
-
-  }
-
-}
-
 ```
 
 4. After that we can add flash cards to that box like this.
@@ -98,39 +104,25 @@ mutation AddBox {
 
 ```
 
-  mutation AddFlashcard {
-
-  addFlashcard(input: {boxId: 1, question: "q2", answer: "a", hint, "hint", tagList: ["box1", "box"]}) {
-
-    flashcard {
-
-      id
-
-      question
-
-      answer
-      
-      hint
-     
-      house
-
-      box {
-
-        id
-
-        title
-
+mutation AddFlashcard($box_id: Int!, $question: String!, $answer: String!, $hint: String!, $tag_list: [String!]) {
+      	addFlashcard(input: { boxId: $box_id, question: $question, answer: $answer, hint: $hint, tagList: $tag_list}) {
+      	flashcard {
+      		id
+      		question
+      		answer
+      		tags
+          hint
+          house
+          lastStudiedAt
+      		box {
+      			id
+      			title
+      		}
+      	}
+      	success
+      	errors
+      	}
       }
-
-    }
-
-    success
-
-    errors
-
-  }
-
-}
 
  ```
 
@@ -138,36 +130,22 @@ mutation AddBox {
 
 ```
 
- mutation UpdateFlashcard {
-
-  updateFlashcard(input: { boxId: 1, id: "3", question: "q1", answer: "a1", tagList: ["bt1", "bt2"]}) {
-
-    flashcard {
-
-      id
-
-      question
-
-      answer
-
-      box {
-
-        id
-
-        title
-
+ mutation UpdateFlashcard($box_id: Int!, $id: String!, $question: String!, $answer: String!, $tag_list: [String!]) {
+      	updateFlashcard(input: { boxId: $box_id, id: $id, question: $question, answer: $answer , tagList: $tag_list}) {
+      	flashcard {
+      		id
+      		question
+      		answer
+      		tags
+      		box {
+                        id
+                        title
+      		}
+      	}
+      	success
+      	errors
+      	}
       }
-
-    }
-
-    success
-
-    errors
-
-  }
-
-}
-
 ```
 
 6. Also we can get all boxes of the current user like this:
@@ -240,31 +218,31 @@ query Studycard {
 
 ```
 
-mutation ResetCard {
-  resetCard(input: {id: 20}) {
-     flashcard {
-      id
-      house
-      question
-      answer
-    }
-  }
-}
+      mutation ResetCard($id: ID!) {
+      	resetCard(input: { id: $id}) {
+      	flashcard {
+      		id
+      		house
+        }
+      	success
+      	errors
+      	}
+      }
 
 ``` 
 
 ```
 
-mutation LevelUpCard {
-  levelUpCard(input: {id: 20}) {
-     flashcard {
-      id
-      house
-      question
-      answer
-    }
-  }
-}
+mutation LevelUpCard($id: ID!) {
+      	levelUpCard(input: { id: $id}) {
+      	flashcard {
+      		id
+      		house
+        }
+      	success
+      	errors
+      	}
+      }
 
 
 ```   
@@ -290,7 +268,6 @@ query Flashcard {
 ```
 
 ## Todos
-* [ ] Join flashcards adn studycard fpr better uery
-* [ ] Add more test for edge case 
 * [ ] Add resolver or filter 
+* [ ] Set up JWT
 
