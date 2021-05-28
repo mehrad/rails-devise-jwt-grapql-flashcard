@@ -1,5 +1,13 @@
 # rails-devise-jwt-grapql-flashcard
-A rails app with devise jwt and GraphQL to implement flashcard quiz like leitnerz box 
+A rails app with devise jwt and GraphQL to implement flashcard quiz like leitnerz box
+
+## Live demo
+
+### Front-End
+ Here you cand find a sample react app to use this backend 
+    https://boiling-reef-96946.herokuapp.com/
+ ### Back-End
+    https://fast-basin-51900.herokuapp.com/graphql
 
 ## GraphQL
 Test these querys on localhost:4000/graphiql
@@ -290,7 +298,6 @@ query Flashcard {
 ```
 
 ## Todos
-* [ ] Join flashcards adn studycard fpr better uery
-* [ ] Add more test for edge case 
 * [ ] Add resolver or filter 
+* [ ] Set up JWT
 
