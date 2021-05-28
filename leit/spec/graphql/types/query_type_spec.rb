@@ -11,6 +11,10 @@ RSpec.describe Types::QueryType do
     let!(:all_flashcards) { admin_flashcards + flashcards }
 
     context 'admin user' do
+      subject(:result) do
+        LeitSchema.execute(query, context: context).as_json
+      end
+
       let(:query) do
         %(query {
           flashcards {
@@ -25,10 +29,6 @@ RSpec.describe Types::QueryType do
         }
       end
 
-      subject(:result) do
-        LeitSchema.execute(query, context: context).as_json
-      end
-
       it 'returns all flashcards' do
         expect(result.dig('data', 'flashcards')).to match_array(
           all_flashcards.map { |flashcard| { 'id' => flashcard.id.to_s } }
@@ -37,6 +37,10 @@ RSpec.describe Types::QueryType do
     end
 
     context 'normal user' do
+      subject(:result) do
+        LeitSchema.execute(query, context: context).as_json
+      end
+
       let(:query) do
         %(query {
           flashcards {
@@ -51,10 +55,6 @@ RSpec.describe Types::QueryType do
         }
       end
 
-      subject(:result) do
-        LeitSchema.execute(query, context: context).as_json
-      end
-
       it 'returns only flashcards' do
         expect(result.dig('data', 'flashcards')).to match_array(
           flashcards.map { |flashcard| { 'id' => flashcard.id.to_s } }
@@ -63,6 +63,10 @@ RSpec.describe Types::QueryType do
     end
 
     context 'normal user box' do
+      subject(:result) do
+        LeitSchema.execute(query, context: context).as_json
+      end
+
       let(:box) { user.boxes.first }
 
       let(:query) do
@@ -79,10 +83,6 @@ RSpec.describe Types::QueryType do
         }
       end
 
-      subject(:result) do
-        LeitSchema.execute(query, context: context).as_json
-      end
-
       it 'returns only one box flashcards given box id' do
         expect(result.dig('data', 'flashcards')).to match_array(
           box.flashcards.map { |flashcard| { 'id' => flashcard.id.to_s } }
@@ -92,6 +92,10 @@ RSpec.describe Types::QueryType do
   end
 
   describe 'studycards' do
+    subject(:result) do
+      LeitSchema.execute(query).as_json
+    end
+
     let(:user) { create(:user) }
     let(:box) { create(:box, user: user) }
     let(:flashcard) { create(:flashcard, box: box) }
@@ -108,10 +112,6 @@ RSpec.describe Types::QueryType do
           lastStudiedAt
         }
       })
-    end
-
-    subject(:result) do
-      LeitSchema.execute(query).as_json
     end
 
     xit 'returns all studycards' do
@@ -137,14 +137,14 @@ RSpec.describe Types::QueryType do
     end
 
     context 'admin user' do
+      subject(:result) do
+        LeitSchema.execute(query, context: context).as_json
+      end
+
       let(:context) do
         {
           current_user: admin
         }
-      end
-
-      subject(:result) do
-        LeitSchema.execute(query, context: context).as_json
       end
 
       it 'returns all boxes' do
@@ -155,14 +155,14 @@ RSpec.describe Types::QueryType do
     end
 
     context 'normal user' do
+      subject(:result) do
+        LeitSchema.execute(query, context: context).as_json
+      end
+
       let(:context) do
         {
           current_user: user
         }
-      end
-
-      subject(:result) do
-        LeitSchema.execute(query, context: context).as_json
       end
 
       it 'returns only boxes' do

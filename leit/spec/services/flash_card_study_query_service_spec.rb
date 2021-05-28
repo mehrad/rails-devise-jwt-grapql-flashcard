@@ -6,9 +6,10 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
   describe '#call' do
     let(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:user_box) { user.boxes.first }
-    context '#with right arguments' do
+
+    describe '#with right arguments' do
       xit 'returns last availables study cards of a box properly' do
-        subject = FlashCardStudyQueryService.new(
+        subject = described_class.new(
           limit: 20,
           offset: 0,
           box: user_box
@@ -20,7 +21,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
       end
 
       xit 'without offest it sets offset to 0 and limit 20' do
-        subject = FlashCardStudyQueryService.new(
+        subject = described_class.new(
           box: user_box
         )
 
@@ -30,7 +31,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
       end
 
       xit 'without box_id it returns errors' do
-        subject = FlashCardStudyQueryService.new
+        subject = described_class.new
 
         to_study_cards, success, errors = subject.call
 
@@ -39,7 +40,8 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
     end
 
     describe '#Interval logics' do
-      subject { FlashCardStudyQueryService.new(variables) }
+      subject { described_class.new(variables) }
+
       let(:variables) do
         {
           limit: 1,
@@ -53,7 +55,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
       let(:flashcard) { create(:flashcard, box: box) }
       let(:studycard) { create(:studycard, flashcard: flashcard) }
 
-      context '#zero house' do
+      describe '#zero house' do
         before { studycard.update!(house: 0) }
 
         it 'does not shows at the same time as last study' do
@@ -70,7 +72,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context '#first house' do
+      describe '#first house' do
         before { studycard.update!(house: 1) }
 
         it 'does not show before second day passed last study' do
@@ -88,7 +90,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context '#second house' do
+      describe '#second house' do
         before { studycard.update!(house: 2) }
 
         it 'does not show before 7th day passed last study' do
@@ -106,7 +108,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context '#third house' do
+      describe '#third house' do
         before { studycard.update!(house: 3) }
 
         it 'does not show before 15th day passed last study' do
@@ -124,7 +126,7 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         end
       end
 
-      context '#forth house' do
+      describe '#forth house' do
         before { studycard.update!(house: 4) }
 
         it 'does not show before 29th day passed last study' do

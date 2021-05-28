@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Flashcard, type: :model do
   describe 'associations' do
-    it { should belong_to(:box).class_name('Box') }
-    it { should have_many(:studycards).class_name('Studycard') }
+    it { is_expected.to belong_to(:box).class_name('Box') }
+    it { is_expected.to have_many(:studycards).class_name('Studycard') }
   end
 
   describe '#create' do

@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
+# Card that user add to study later
+# it belongs to boxes and has many study cards
+# study cards are not visible to end user and
+# only being used to be able to save to proccess
+# of learning a card.
 class Flashcard < ApplicationRecord
   acts_as_taggable_on :tags
   belongs_to :box
   has_many :studycards, dependent: :destroy
 
   ACTIVE_STUDY_DELEGATES = %w[hint state reset_count house reset! level_up!].freeze
-
-  # ACTIVE_STUDY_DELEGATES.each do |method_name|
-  #   eval <<-DEFINE_METHOD
-  #     def #{method_name}
-  #       active_study_card.(#{method_name})
-  #     end
-  #   DEFINE_METHOD
-  # end
 
   def self.flashcards_for(user, box_id)
     return all if user&.admin?

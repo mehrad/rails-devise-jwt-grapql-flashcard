@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Graphql man controller. cas accessed via /graphql
 class GraphqlController < ApplicationController
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
@@ -11,7 +12,6 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
       current_user: current_user
     }
     result = LeitSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -24,7 +24,8 @@ class GraphqlController < ApplicationController
 
   private
 
-  # Handle variables in form data, JSON body, or a blank value
+  # Handle variables in form data
+  # JSON body, or a blank value
   def prepare_variables(variables_param)
     case variables_param
     when String

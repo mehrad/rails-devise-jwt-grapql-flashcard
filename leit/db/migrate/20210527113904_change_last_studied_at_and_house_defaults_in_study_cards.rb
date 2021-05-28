@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeLastStudiedAtAndHouseDefaultsInStudyCards < ActiveRecord::Migration[6.1]
   def change
     change_column_default :studycards, :last_studied_at, Time.now

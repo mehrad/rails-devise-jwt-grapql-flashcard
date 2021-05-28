@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 AllCops:
   Exclude:
     - 'bin/bundle'
@@ -6,4 +8,4 @@ AllCops:
 Metrics/BlockLength:
   Enabled: true
   Exclude:
-    - 'spec/**/*'
+    - 'db/**/*'

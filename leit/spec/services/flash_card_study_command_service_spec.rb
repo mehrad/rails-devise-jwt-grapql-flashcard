@@ -7,6 +7,8 @@ RSpec.describe FlashCardStudyCommandService, type: :model do
     let(:user) { create(:user_with_boxes_flashcards_studycards) }
 
     context 'with correct variables' do
+      subject { described_class.new(variables) }
+
       let(:variables) do
         {
           box_id: user.boxes.first.id,
@@ -16,7 +18,6 @@ RSpec.describe FlashCardStudyCommandService, type: :model do
           tag_list: %w[tag1 tag2]
         }
       end
-      subject { FlashCardStudyCommandService.new(variables) }
 
       it 'creates flashcards and studycards, no errors with success true' do
         flashcard, success, errors = subject.call
@@ -29,6 +30,8 @@ RSpec.describe FlashCardStudyCommandService, type: :model do
     end
 
     context 'with bad variables' do
+      subject { described_class.new(variables) }
+
       let(:variables) do
         {
           box_id: '',
@@ -38,8 +41,6 @@ RSpec.describe FlashCardStudyCommandService, type: :model do
           tag_list: %w[tag1 tag2]
         }
       end
-
-      subject { FlashCardStudyCommandService.new(variables) }
 
       it 'returns errors and success false' do
         flashcard, success, errors = subject.call
