@@ -55,7 +55,7 @@ RSpec.describe Types::QueryType do
         }
       end
 
-      it 'returns only flashcards' do
+      it 'returns only users flashcards' do
         expect(result.dig('data', 'flashcards')).to match_array(
           flashcards.map { |flashcard| { 'id' => flashcard.id.to_s } }
         )

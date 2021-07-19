@@ -3,7 +3,7 @@
 class FlashCardStudyQueryService
   STUDY_INTERVALS = [1, 2, 7, 15, 29].freeze
 
-  def initialize(args)
+  def initialize(args = {})
     @args = args
   end
 

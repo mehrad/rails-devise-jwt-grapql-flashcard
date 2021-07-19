@@ -7,8 +7,8 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
     let(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:user_box) { user.boxes.first }
 
-    describe '#with right arguments' do
-      xit 'returns last availables study cards of a box properly' do
+    context 'with right arguments' do
+      it 'returns last availables study cards of a box properly' do
         subject = described_class.new(
           limit: 20,
           offset: 0,
@@ -18,24 +18,22 @@ RSpec.describe FlashCardStudyQueryService, type: :model do
         to_study_cards, success, errors = subject.call
 
         expect(to_study_cards).to match_array(user_box.flashcards)
+        expect(success).to be true
+        expect(errors).to be_nil
       end
 
       xit 'without offest it sets offset to 0 and limit 20' do
-        subject = described_class.new(
-          box: user_box
-        )
-
-        to_study_cards, success, errors = subject.call
-
-        expect(to_study_cards).to match_array(user_box.flashcards)
       end
 
-      xit 'without box_id it returns errors' do
-        subject = described_class.new
+      context 'without box_id' do
+        it 'returns errors' do
+          subject = described_class.new
+          to_study_cards, success, errors = subject.call
 
-        to_study_cards, success, errors = subject.call
-
-        expect(errors).to eq('Box must exists')
+          expect(to_study_cards).to be_nil
+          expect(success).to be false
+          expect(errors).to eq('Box must exists')
+        end
       end
     end
 
