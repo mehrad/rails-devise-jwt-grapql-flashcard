@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_27_113904) do
+ActiveRecord::Schema.define(version: 2021_07_21_140350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,10 +44,16 @@ ActiveRecord::Schema.define(version: 2021_05_27_113904) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
+  create_table "study_stats", force: :cascade do |t|
+    t.jsonb "log", default: {}, null: false
+    t.bigint "studycard_id", null: false
+    t.index ["studycard_id"], name: "index_study_stats_on_studycard_id"
+  end
+
   create_table "studycards", force: :cascade do |t|
     t.string "hint"
     t.datetime "first_studied_at"
-    t.datetime "last_studied_at", default: "2021-07-19 08:14:47"
+    t.datetime "last_studied_at", default: "2021-07-19 12:13:12"
     t.integer "state"
     t.integer "house", default: 0
     t.integer "reset_count"
@@ -127,6 +133,7 @@ ActiveRecord::Schema.define(version: 2021_05_27_113904) do
 
   add_foreign_key "boxes", "users"
   add_foreign_key "flashcards", "boxes"
+  add_foreign_key "study_stats", "studycards"
   add_foreign_key "studycards", "flashcards"
   add_foreign_key "taggings", "tags"
 end
