@@ -16,10 +16,6 @@ class Studycard < ApplicationRecord
     self.house = house.to_i + 1
     self.last_studied_at = Time.now
     study_stats << stat
-    puts "\n"
-    p study_stats.last
-    puts '---'
-    p stat
   end
 
   def level_up!
