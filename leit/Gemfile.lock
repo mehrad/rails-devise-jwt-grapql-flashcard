@@ -284,7 +284,7 @@ DEPENDENCIES
   faker (~> 2.17)
   figaro (~> 1.2)
   graphiql-rails
-  graphql (~> 1.12)
+  graphql
   guard-rspec
   jwt
   listen (~> 3.3)

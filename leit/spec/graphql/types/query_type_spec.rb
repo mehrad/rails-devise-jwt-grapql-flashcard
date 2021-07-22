@@ -91,36 +91,6 @@ RSpec.describe Types::QueryType do
     end
   end
 
-  describe 'studycards' do
-    subject(:result) do
-      LeitSchema.execute(query).as_json
-    end
-
-    let(:user) { create(:user) }
-    let(:box) { create(:box, user: user) }
-    let(:flashcard) { create(:flashcard, box: box) }
-    let!(:studycards) { create_pair(:studycard, flashcard: flashcard) }
-
-    let(:query) do
-      %(query Studycard {
-        studycards(boxId: 21) {
-          id
-          question
-          answer
-          house
-          hint
-          lastStudiedAt
-        }
-      })
-    end
-
-    xit 'returns all studycards' do
-      expect(result.dig('data', 'studycards')).to match_array(
-        studycards.map { |studycard| { 'hint' => studycard.hint } }
-      )
-    end
-  end
-
   describe 'boxes' do
     let!(:user) { create(:user_with_boxes_flashcards_studycards) }
     let(:boxes) { user.boxes }
@@ -170,6 +140,35 @@ RSpec.describe Types::QueryType do
           boxes.first.user.boxes.map { |box| { 'title' => box.title } }
         )
       end
+    end
+  end
+
+  describe 'study stats' do
+    subject(:result) do
+      LeitSchema.execute(query, context: context).as_json
+    end
+
+    let(:user) { create(:user_with_boxes_flashcards_studycards) }
+    let(:study_stats) { user.boxes.first.flashcards.first.active_study_card.study_stats }
+
+    let(:context) do
+      {
+        current_user: user
+      }
+    end
+
+    let(:query) do
+      %(query Studycard {
+        studyStats(flashcardId: #{user.boxes.first.flashcards.first.id}) {
+          log
+        }
+      })
+    end
+
+    it 'returns flashcard stats' do
+      expect(result.dig('data', 'studyStats')).to match_array(
+        study_stats.map { |stat| { 'log' => stat.log } }
+      )
     end
   end
 end

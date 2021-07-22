@@ -30,5 +30,6 @@ module Types
     def tags
       object.tag_list
     end
+
   end
 end
