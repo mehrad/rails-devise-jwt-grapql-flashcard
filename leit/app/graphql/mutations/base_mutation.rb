@@ -13,8 +13,8 @@ module Mutations
     input_object_class Types::BaseInputObject
 
     # https://github.com/rmosolgo/graphql-ruby/issues/1837
-    field :success, Boolean, null: false
     field :errors, [String], null: true
+    field :success, Boolean, null: false
 
     protected
 

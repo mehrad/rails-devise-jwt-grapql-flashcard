@@ -26,14 +26,14 @@ RSpec.describe Mutations::UpdateFlashcardMutation do
     flashcard.reload
     expect(result.dig(:flashcard, :question)).to eq(flashcard.question)
     expect(result.dig(:flashcard, :tags)).to match_array(flashcard.tag_list)
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 
-  it 'raises not found error if there is no flashcard ' do
+  it 'raises not found error if there is no flashcard' do
     user = create(:user_with_boxes_flashcards_studycards)
     box = user.boxes.first
-    flashcard = box.flashcards.first
+    box.flashcards.first
 
     variables = {
       'id' => '1',

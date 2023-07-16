@@ -10,7 +10,7 @@ FactoryBot.define do
     tag_list { %w[Math React] }
 
     factory :flashcard_with_studycards do
-      studycards { build_list :studycard, 3 }
+      studycards { build_list(:studycard, 3) }
     end
   end
 end

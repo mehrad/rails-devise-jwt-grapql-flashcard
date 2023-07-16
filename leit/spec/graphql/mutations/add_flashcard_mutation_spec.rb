@@ -25,7 +25,7 @@ RSpec.describe Mutations::AddFlashcardMutation do
     expect(result.dig(:flashcard, :question)).to eq(variables['question'])
     expect(result.dig(:flashcard, :hint)).to eq(variables['hint'])
     expect(result.dig(:flashcard, :tags)).to eq(variables['tag_list'])
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 

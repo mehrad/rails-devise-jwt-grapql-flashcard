@@ -4,10 +4,10 @@ module Mutations
   class AddFlashcardMutation < Mutations::BaseMutation
     graphql_name 'AddFlashcard'
 
-    argument :box_id, Integer, required: true
-    argument :question, String, required: true
     argument :answer, String, required: false
+    argument :box_id, Integer, required: true
     argument :hint, String, required: false
+    argument :question, String, required: true
     argument :tag_list, [String], required: false
 
     field :flashcard, Types::FlashcardType, null: true

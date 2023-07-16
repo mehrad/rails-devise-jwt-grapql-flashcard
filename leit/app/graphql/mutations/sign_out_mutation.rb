@@ -8,7 +8,7 @@ module Mutations
 
     def resolve
       user = context[:current_user]
-      GraphQL::ExecutionError.new('User not signed in') unless user.present?
+      GraphQL::ExecutionError.new('User not signed in') if user.blank?
 
       success = user.reset_authentication_token!
 

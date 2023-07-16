@@ -2,34 +2,23 @@
 
 module Types
   class FlashcardType < Types::BaseObject
-    field :id, ID, null: false
     field :answer, String, null: true
-    field :question, String, null: true
-    field :image_url, String, null: true
-    field :house, Integer, null: true
-    field :hint, String, null: true
-    field :last_studied_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :tags, [String], null: true
-    field :box_id, Integer, null: true
     field :box, Types::BoxType, null: true
+    field :box_id, Integer, null: true
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :hint, String, null: true
+    field :house, Integer, null: true
+    field :id, ID, null: false
+    field :image_url, String, null: true
+    field :last_studied_at, GraphQL::Types::ISO8601DateTime, null: true
+    field :question, String, null: true
+    field :tags, [String], null: true, method: :tag_list
+    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
-    def last_studied_at
-      object.last_studied_at
-    end
+    delegate :last_studied_at, to: :object
 
-    def hint
-      object.hint
-    end
+    delegate :hint, to: :object
 
-    def house
-      object.house
-    end
-
-    def tags
-      object.tag_list
-    end
-
+    delegate :house, to: :object
   end
 end

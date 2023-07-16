@@ -20,7 +20,7 @@ RSpec.describe Mutations::ResetCardMutation do
     flashcard.reload
 
     expect(result.dig(:flashcard, :house)).to eq(flashcard.house)
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 

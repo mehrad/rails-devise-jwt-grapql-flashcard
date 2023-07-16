@@ -14,7 +14,7 @@ class Studycard < ApplicationRecord
   def level_up
     stat = StudyStat.new(log: { timestamp: Time.now.to_i, prev_house: house, current_house: house.to_i + 1 })
     self.house = house.to_i + 1
-    self.last_studied_at = Time.now
+    self.last_studied_at = Time.zone.now
     study_stats << stat
   end
 
@@ -27,7 +27,7 @@ class Studycard < ApplicationRecord
     stat = StudyStat.new(log: { timestamp: Time.now.to_i, prev_house: house, current_house: 0 })
     self.house = 0
     self.reset_count = reset_count.to_i + 1
-    self.last_studied_at = Time.now
+    self.last_studied_at = Time.zone.now
     study_stats << stat
   end
 
@@ -37,14 +37,14 @@ class Studycard < ApplicationRecord
   end
 
   def initialize_defaults
-    self.last_studied_at ||= Time.now
+    self.last_studied_at ||= Time.zone.now
   end
 
   def intervaled?(intervals)
     return false if house.to_i >= intervals.size
 
-    self.last_studied_at ||= Time.now
+    self.last_studied_at ||= Time.zone.now
 
-    Time.now >= self.last_studied_at + intervals[house.to_i].days
+    Time.zone.now >= self.last_studied_at + intervals[house.to_i].days
   end
 end

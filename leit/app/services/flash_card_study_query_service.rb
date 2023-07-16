@@ -8,8 +8,8 @@ class FlashCardStudyQueryService
   end
 
   def call
-    limit = args[:limit] || 20
-    offset = args[:offset] || 0
+    args[:limit] || 20
+    args[:offset] || 0
     box = args[:box]
 
     return [nil, false, 'Box must exists'] if box.nil?

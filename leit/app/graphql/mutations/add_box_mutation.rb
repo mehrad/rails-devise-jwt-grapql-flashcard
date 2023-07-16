@@ -4,8 +4,8 @@ module Mutations
   class AddBoxMutation < Mutations::BaseMutation
     graphql_name 'AddBox'
 
-    argument :title, String, required: true
     argument :desc, String, required: false
+    argument :title, String, required: true
 
     field :box, Types::BoxType, null: true
 

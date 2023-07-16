@@ -17,7 +17,7 @@ RSpec.describe Mutations::SignInMutation do
     expect(result.dig(:user, :id)).to eq(user.id.to_s)
     expect(result.dig(:user, :authenticationToken))
       .to eq(user.authentication_token)
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 

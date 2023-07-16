@@ -4,11 +4,11 @@ module Mutations
   class UpdateFlashcardMutation < Mutations::BaseMutation
     graphql_name 'UpdateFlashcard'
 
+    argument :answer, String, required: false
+    argument :box_id, Integer, required: true
     argument :id, String, required: true
     argument :question, String, required: true
-    argument :answer, String, required: false
     argument :tag_list, [String], required: false
-    argument :box_id, Integer, required: true
 
     field :flashcard, Types::FlashcardType, null: true
 
@@ -22,7 +22,7 @@ module Mutations
 
       box = Box.find_by(id: box_id, user: user)
 
-      if box.nil? || !box.flashcards.include?(flashcard)
+      if box.nil? || box.flashcards.exclude?(flashcard)
         raise GraphQL::ExecutionError,
               'You do not have autherization to perform this action'
       end
