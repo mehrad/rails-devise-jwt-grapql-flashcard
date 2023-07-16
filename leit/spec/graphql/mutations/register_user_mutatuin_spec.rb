@@ -15,7 +15,7 @@ RSpec.describe Mutations::RegisterUserMutation do
     expect(result.dig(:user, :id)).to eq(User.last.id.to_s)
     expect(result.dig(:user, :authenticationToken))
       .to eq(User.last.authentication_token)
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Mutations::RegisterUserMutation do
       'password' => 'testing123'
     }
 
-    user = create(:user, **variables.symbolize_keys)
+    create(:user, **variables.symbolize_keys)
 
     result = gql_query(query: mutation, variables: variables)
              .to_h.deep_symbolize_keys

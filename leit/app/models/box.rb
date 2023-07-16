@@ -13,4 +13,13 @@ class Box < ApplicationRecord
 
     where(user: user)
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    # Define the attributes you want to make searchable by Ransack
+    %w[flashcards_id user_id title desc]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[flashcards user]
+  end
 end

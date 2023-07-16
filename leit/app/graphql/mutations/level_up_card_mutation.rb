@@ -14,7 +14,7 @@ module Mutations
               'You need to authenticate to perform this action'
       end
 
-      user = context[:current_user]
+      context[:current_user]
 
       flashcard = Flashcard.find_by(id: id)
       raise GraphQL::ExecutionError, 'flashcard not found' if flashcard.nil?

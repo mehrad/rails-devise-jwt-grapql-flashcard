@@ -17,7 +17,7 @@ RSpec.describe Mutations::DeleteBoxMutation do
     result = gql_query(query: mutation, variables: variables, context: context)
     result = result.to_h.deep_symbolize_keys.dig(:data, :deleteBox)
 
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 

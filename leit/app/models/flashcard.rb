@@ -20,39 +20,31 @@ class Flashcard < ApplicationRecord
     where(box_id: box_id)
   end
 
-  def last_studied_at
-    active_study_card.last_studied_at
-  end
+  delegate :last_studied_at, to: :active_study_card
 
-  def hint
-    active_study_card.hint
-  end
+  delegate :hint, to: :active_study_card
 
-  def state
-    active_study_card.state
-  end
+  delegate :state, to: :active_study_card
 
-  def reset_count
-    active_study_card.reset_count
-  end
+  delegate :reset_count, to: :active_study_card
 
-  def house
-    active_study_card.house
-  end
+  delegate :house, to: :active_study_card
 
-  def reset!
-    active_study_card.reset!
-  end
+  delegate :reset!, to: :active_study_card
 
-  def level_up!
-    active_study_card.level_up!
-  end
+  delegate :level_up!, to: :active_study_card
 
-  def intervaled?(intervals)
-    active_study_card.intervaled?(intervals)
-  end
+  delegate :intervaled?, to: :active_study_card
 
   def active_study_card
     studycards.last
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    super + %w[answer question]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[box studycards]
   end
 end

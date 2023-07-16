@@ -1,4 +1,8 @@
-require: rubocop-rspec
+require:
+- rubocop-rspec
+- rubocop-factory_bot
+- rubocop-graphql
+- rubocop-rails
 
 AllCops:
   Exclude:

@@ -19,7 +19,7 @@ RSpec.describe Mutations::AddBoxMutation do
     result = result.to_h.deep_symbolize_keys.dig(:data, :addBox)
 
     expect(result.dig(:box, :title)).to eq(variables['title'])
-    expect(result[:success]).to eq(true)
+    expect(result[:success]).to be(true)
     expect(result[:errors]).to be_blank
   end
 

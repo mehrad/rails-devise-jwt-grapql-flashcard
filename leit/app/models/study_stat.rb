@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StudyStat < ApplicationRecord
   belongs_to :studycard
 

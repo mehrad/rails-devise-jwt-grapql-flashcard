@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Flashcard, type: :model do
+RSpec.describe Flashcard do
   let(:user) { create(:user_with_boxes_flashcards_studycards) }
   let(:flashcard) { user.boxes.first.flashcards.first }
 

@@ -29,18 +29,18 @@ module Types
           [Types::FlashcardType],
           null: false,
           description: 'Returns a list of stduycards' do
+      argument :box_id, Integer, required: true
       argument :limit, Integer, required: false
       argument :offset, Integer, required: false
-      argument :box_id, Integer, required: true
     end
 
     field :study_stats,
           [Types::StudyStatType],
           null: false,
           description: 'Returns a flash card stats' do
+      argument :flashcard_id, Integer, required: true
       argument :limit, Integer, required: false
       argument :offset, Integer, required: false
-      argument :flashcard_id, Integer, required: true
     end
 
     def study_stats(flashcard_id:)
@@ -53,7 +53,7 @@ module Types
 
     def studycards(box_id:, limit: 20, offset: 0)
       box = Box.boxes_for(me).where(id: box_id).first
-      flashcards, success, errors = FlashCardStudyQueryService.new(box: box, limit: limit, offset: offset).call
+      flashcards, = FlashCardStudyQueryService.new(box: box, limit: limit, offset: offset).call
       flashcards
     end
 
